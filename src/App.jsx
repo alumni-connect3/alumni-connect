@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
+import SignupAlumni from "./SignupAlumni";
+import RoleSelection from "./RoleSelection";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -12,8 +14,12 @@ function App() {
         return <Home onNavigate={setCurrentPage} />;
       case "login":
         return <Login onNavigate={setCurrentPage} />;
+      case "role-selection":
+        return <RoleSelection onNavigate={setCurrentPage} />;
       case "signup":
         return <Signup onNavigate={setCurrentPage} />;
+      case "signup-alumni":
+        return <SignupAlumni onNavigate={setCurrentPage} />;
       default:
         return <Home onNavigate={setCurrentPage} />;
     }

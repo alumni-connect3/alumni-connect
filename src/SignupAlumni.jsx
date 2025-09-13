@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-function Signup({ onNavigate }) {
+function SignupAlumni({ onNavigate }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    studentId: "",
-    major: "",
+    graduationYear: "",
+    degree: "",
+    currentJob: "",
     password: "",
     confirmPassword: ""
   });
@@ -25,8 +26,8 @@ function Signup({ onNavigate }) {
       return;
     }
     
-    // Here you would typically handle student signup logic
-    alert(`Student registration for: ${formData.name} (${formData.email})`);
+    // Here you would typically handle alumni signup logic
+    alert(`Alumni registration for: ${formData.name} (${formData.email})`);
   };
 
   return (
@@ -38,7 +39,7 @@ function Signup({ onNavigate }) {
       maxWidth: "450px",
       width: "100%"
     }}>
-      <h2 style={{ color: "#333", textAlign: "center", marginBottom: "30px" }}>Student Registration</h2>
+      <h2 style={{ color: "#333", textAlign: "center", marginBottom: "30px" }}>Alumni Registration</h2>
       
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "20px" }}>
@@ -78,12 +79,14 @@ function Signup({ onNavigate }) {
         </div>
         
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "5px", color: "#555" }}>Student ID:</label>
+          <label style={{ display: "block", marginBottom: "5px", color: "#555" }}>Graduation Year:</label>
           <input
-            type="text"
-            name="studentId"
-            value={formData.studentId}
+            type="number"
+            name="graduationYear"
+            value={formData.graduationYear}
             onChange={handleChange}
+            min="1950"
+            max="2030"
             required
             style={{
               width: "100%",
@@ -96,13 +99,36 @@ function Signup({ onNavigate }) {
         </div>
         
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "5px", color: "#555" }}>Major:</label>
-          <input
-            type="text"
-            name="major"
-            value={formData.major}
+          <label style={{ display: "block", marginBottom: "5px", color: "#555" }}>Degree:</label>
+          <select
+            name="degree"
+            value={formData.degree}
             onChange={handleChange}
             required
+            style={{
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ddd",
+              borderRadius: "5px",
+              fontSize: "16px",
+              backgroundColor: "white"
+            }}
+          >
+            <option value="">Select Degree</option>
+            <option value="bachelor">Bachelor's Degree</option>
+            <option value="master">Master's Degree</option>
+            <option value="phd">PhD</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "5px", color: "#555" }}>Current Job (optional):</label>
+          <input
+            type="text"
+            name="currentJob"
+            value={formData.currentJob}
+            onChange={handleChange}
             style={{
               width: "100%",
               padding: "10px",
@@ -154,7 +180,7 @@ function Signup({ onNavigate }) {
           style={{
             width: "100%",
             padding: "12px",
-            backgroundColor: "#2196F3",
+            backgroundColor: "#FF9800",
             color: "white",
             border: "none",
             borderRadius: "5px",
@@ -164,10 +190,10 @@ function Signup({ onNavigate }) {
             marginBottom: "20px",
             transition: "background-color 0.3s"
           }}
-          onMouseOver={(e) => e.target.style.backgroundColor = "#0b7dda"}
-          onMouseOut={(e) => e.target.style.backgroundColor = "#2196F3"}
+          onMouseOver={(e) => e.target.style.backgroundColor = "#f57c00"}
+          onMouseOut={(e) => e.target.style.backgroundColor = "#FF9800"}
         >
-          Register as Student
+          Register as Alumni
         </button>
       </form>
       
@@ -193,4 +219,4 @@ function Signup({ onNavigate }) {
   );
 }
 
-export default Signup;
+export default SignupAlumni;

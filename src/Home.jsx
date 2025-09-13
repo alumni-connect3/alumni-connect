@@ -42,7 +42,7 @@ function Home({ onNavigate }) {
         </button>
         
         <button 
-          onClick={() => onNavigate("signup")}
+          onClick={() => onNavigate("role-selection")}  // Updated to go to role selection
           style={{
             padding: "12px 24px",
             backgroundColor: "#2196F3",
