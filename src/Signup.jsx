@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useState } from "react";
+import { auth, db } from "./firebaseConfig";
 
 function Signup({ onNavigate }) {
   const [form, setForm] = useState({
@@ -20,6 +23,7 @@ function Signup({ onNavigate }) {
   const [showOtpField, setShowOtpField] = useState(false);
   const [backendOtp, setBackendOtp] = useState("");
   const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const currentYear = new Date().getFullYear();
 
   const handleSendOtp = async () => {
@@ -28,8 +32,9 @@ function Signup({ onNavigate }) {
       return;
     }
     
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) {
-      setErrors({...errors, email: "Enter a valid email to send OTP"});
+    // Updated email validation to require @vishnu.edu.in domain
+    if (!/^[^@\s]+@vishnu\.edu\.in$/.test(form.email)) {
+      setErrors({...errors, email: "Only @vishnu.edu.in emails are allowed"});
       return;
     }
     
@@ -64,7 +69,6 @@ function Signup({ onNavigate }) {
   const handleVerifyOtp = () => {
     if (otp === backendOtp.toString()) {
       alert("✅ OTP verified! Continue signup.");
-      // Proceed with your existing signup logic here
     } else {
       alert("❌ Invalid OTP. Try again.");
     }
@@ -97,8 +101,9 @@ function Signup({ onNavigate }) {
     if (!form.degree) err.degree = "Degree is required";
 
     if (!form.email.trim()) err.email = "Email is required";
-    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email))
-      err.email = "Enter a valid email";
+    // Updated email validation to require @vishnu.edu.in domain
+    else if (!/^[^@\s]+@vishnu\.edu\.in$/.test(form.email))
+      err.email = "Only @vishnu.edu.in emails are allowed";
 
     if (!otp.trim()) err.otp = "OTP is required";
     else if (otp !== backendOtp.toString())
@@ -118,31 +123,72 @@ function Signup({ onNavigate }) {
     return Object.keys(err).length === 0;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
+    
+    setIsSubmitting(true);
 
-    console.log("Submitting Student form:", form);
-    alert("Student registration successful!");
+    try {
+      // ✅ Create user in Firebase
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.password
+      );
 
-    // Reset form
-    setForm({
-      fullName: "",
-      regdNo: "",
-      department: "",
-      phone: "",
-      dob: "",
-      gradYear: "",
-      degree: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      agree: false,
-    });
-    setErrors({});
-    setOtp("");
-    setShowOtpField(false);
-    setBackendOtp("");
+      await updateProfile(userCredential.user, { displayName: form.fullName });
+
+      // ✅ Save to Firestore
+      await setDoc(doc(db, "students", userCredential.user.uid), {
+        fullName: form.fullName,
+        regdNo: form.regdNo,
+        department: form.department,
+        phone: form.phone,
+        dob: form.dob,
+        gradYear: form.gradYear,
+        degree: form.degree,
+        email: form.email,
+        createdAt: serverTimestamp(),
+      });
+
+      alert("Registration successful!");
+      
+      // Reset form
+      setForm({
+        fullName: "",
+        regdNo: "",
+        department: "",
+        phone: "",
+        dob: "",
+        gradYear: "",
+        degree: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        agree: false,
+      });
+      setErrors({});
+      setOtp("");
+      setShowOtpField(false);
+      setBackendOtp("");
+      
+    } catch (error) {
+      console.error("Firebase Error:", error);
+      let errorMessage = "Registration failed. Please try again.";
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = "This email is already registered. Please login instead.";
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = "Password is too weak. Please choose a stronger password.";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = "Invalid email address format.";
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -250,7 +296,7 @@ function Signup({ onNavigate }) {
 
           {/* Phone Number */}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <label style={{ marginBottom: "5px", color: "#555", fontSize: "14px" }}>Phone Number</label>
+            <label style={{ marginBottom: "5px", color: "##555", fontSize: "14px" }}>Phone Number</label>
             <input
               name="phone"
               value={form.phone}
@@ -340,7 +386,7 @@ function Signup({ onNavigate }) {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder="Enter your @vishnu.edu.in email"
                 type="email"
                 style={{
                   padding: "12px",
@@ -465,22 +511,23 @@ function Signup({ onNavigate }) {
           <div style={{ gridColumn: "1 / -1" }}>
             <button
               type="submit"
+              disabled={isSubmitting}
               style={{
                 width: "100%",
                 padding: "14px",
-                backgroundColor: "#2196F3",
+                backgroundColor: isSubmitting ? "#ccc" : "#2196F3",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",
-                cursor: "pointer",
+                cursor: isSubmitting ? "not-allowed" : "pointer",
                 fontSize: "16px",
                 fontWeight: "bold",
                 transition: "background-color 0.3s"
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = "#0b7dda"}
-              onMouseOut={(e) => e.target.style.backgroundColor = "#2196F3"}
+              onMouseOver={(e) => !isSubmitting && (e.target.style.backgroundColor = "#0b7dda")}
+              onMouseOut={(e) => !isSubmitting && (e.target.style.backgroundColor = "#2196F3")}
             >
-              Register as Student
+              {isSubmitting ? "Processing..." : "Register as Student"}
             </button>
           </div>
         </form>
@@ -489,7 +536,7 @@ function Signup({ onNavigate }) {
           <p style={{ color: "#666", margin: "0 0 10px 0" }}>
             Already have an account?{" "}
             <span 
-              onClick={() => onNavigate("login")}
+              onClick={() => onNavigate("role-selection-login")}
               style={{ color: "#4CAF50", cursor: "pointer", textDecoration: "underline" }}
             >
               Login
