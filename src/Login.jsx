@@ -68,6 +68,7 @@ function Login({ onNavigate, role }) {
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
         padding: "20px",
+        overflow: "hidden", // Prevents scrolling on the page
       }}
     >
       <div
@@ -78,6 +79,8 @@ function Login({ onNavigate, role }) {
           boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
           maxWidth: "400px",
           width: "100%",
+          overflow: "auto", // Allows internal scrolling only if content overflows the card
+          maxHeight: "calc(100vh - 40px)", // Limits card height to viewport minus padding
         }}
       >
         <h2 style={{ color: "#333", marginBottom: "20px", textAlign: "center" }}>

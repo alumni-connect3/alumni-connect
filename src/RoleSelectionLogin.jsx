@@ -6,13 +6,21 @@ function RoleSelectionLogin({ onNavigate }) {
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
+        minHeight: "100vh",
+        width: "100vw",
         background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         padding: "20px",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        boxSizing: "border-box",
+        margin: "0",
+        position: "fixed",
+        top: "0",
+        left: "0",
+        overflow: "auto"
       }}
     >
       <div
@@ -24,6 +32,8 @@ function RoleSelectionLogin({ onNavigate }) {
           boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
           maxWidth: "500px",
           width: "100%",
+          marginTop: "40px",
+          marginBottom: "20px"
         }}
       >
         <h1 style={{ 
