@@ -8,6 +8,10 @@ import RoleSelectionLogin from "./RoleSelectionLogin";
 import Signup from "./Signup";
 import SignupAlumni from "./SignupAlumni";
 import StudentDashboard from "./StudentDashboard";
+import ViewStudents from "./ViewStudents";
+import ViewAlumni from "./ViewAlumni";
+import AddEvent from "./AddEvent";
+import Announcement from "./Announcement";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -42,6 +46,14 @@ function App() {
         return <StudentDashboard onNavigate={navigate} />;
       case "alumni-dashboard":
         return <AlumniDashboard onNavigate={navigate} />;
+      case "view-students":
+        return <ViewStudents onNavigate={navigate} />;
+      case "view-alumni":
+        return <ViewAlumni onNavigate={navigate} />;
+      case "add-event":
+        return <AddEvent onNavigate={navigate} />;
+      case "announcement":
+        return <Announcement onNavigate={navigate} />;
       default:
         return <Home onNavigate={navigate} />;
     }
