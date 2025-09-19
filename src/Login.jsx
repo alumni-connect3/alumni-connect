@@ -63,30 +63,55 @@ function Login({ onNavigate, role }) {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-        padding: "20px",
-        overflow: "hidden", // Prevents scrolling on the page
+        width: "100%",
+        height: "100vh",
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        background: "linear-gradient(135deg, #e6f3ff 0%, #f0f9ff 50%, #e6f3ff 100%)",
       }}
     >
       <div
         style={{
-          padding: "40px",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-          maxWidth: "400px",
           width: "100%",
-          overflow: "auto", // Allows internal scrolling only if content overflows the card
-          maxHeight: "calc(100vh - 40px)", // Limits card height to viewport minus padding
+          padding: "40px",
+          background: "linear-gradient(145deg, #ffffff 0%, #f8faff 100%)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "auto",
+          boxShadow: "0 0 20px rgba(0,0,0,0.1)"
         }}
       >
-        <h2 style={{ color: "#333", marginBottom: "20px", textAlign: "center" }}>
+        <h2 style={{ 
+          color: "#1a365d",
+          marginBottom: "30px", 
+          textAlign: "center",
+          fontSize: "2.5rem",
+          fontWeight: "600",
+          textTransform: "uppercase",
+          letterSpacing: "1px",
+          textShadow: "0 2px 4px rgba(0,0,0,0.1)"
+        }}>
           Login as {role || "Select Role"}
         </h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+        <form onSubmit={handleSubmit} style={{ 
+          display: "flex", 
+          flexDirection: "column", 
+          gap: "20px",
+          width: "100%",
+          maxWidth: "400px",
+          margin: "0 auto",
+          padding: "30px",
+          background: "rgba(255, 255, 255, 0.5)",
+          borderRadius: "15px",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(10px)"
+        }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <label style={{ marginBottom: "5px", color: "#555", fontSize: "14px" }}>Email</label>
             <input
@@ -95,9 +120,13 @@ function Login({ onNavigate, role }) {
               onChange={(e) => setEmail(e.target.value)}
               style={{
                 padding: "12px",
-                border: error ? "1px solid #e53e3e" : "1px solid #ddd",
-                borderRadius: "5px",
+                border: error ? "1px solid #e53e3e" : "1px solid #e2e8f0",
+                borderRadius: "8px",
                 fontSize: "16px",
+                backgroundColor: "#f8faff",
+                transition: "all 0.3s ease",
+                outline: "none",
+                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
               }}
               placeholder="Enter your email"
             />
@@ -110,9 +139,13 @@ function Login({ onNavigate, role }) {
               onChange={(e) => setPassword(e.target.value)}
               style={{
                 padding: "12px",
-                border: error ? "1px solid #e53e3e" : "1px solid #ddd",
-                borderRadius: "5px",
+                border: error ? "1px solid #e53e3e" : "1px solid #e2e8f0",
+                borderRadius: "8px",
                 fontSize: "16px",
+                backgroundColor: "#f8faff",
+                transition: "all 0.3s ease",
+                outline: "none",
+                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
               }}
               placeholder="Enter your password"
             />
@@ -122,15 +155,18 @@ function Login({ onNavigate, role }) {
             type="submit"
             disabled={isSubmitting || !role}
             style={{
-              padding: "12px",
-              backgroundColor: isSubmitting || !role ? "#ccc" : "#FF9800",
+              padding: "14px",
+              background: isSubmitting || !role 
+                ? "#ccc" 
+                : "linear-gradient(135deg, #4299e1 0%, #3182ce 100%)",
               color: "white",
               border: "none",
-              borderRadius: "5px",
+              borderRadius: "8px",
               cursor: isSubmitting || !role ? "not-allowed" : "pointer",
               fontSize: "16px",
-              fontWeight: "bold",
-              transition: "background-color 0.3s",
+              fontWeight: "600",
+              transition: "all 0.3s ease",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
             }}
             onMouseOver={(e) => !isSubmitting && role && (e.target.style.backgroundColor = "#f57c00")}
             onMouseOut={(e) => !isSubmitting && role && (e.target.style.backgroundColor = "#FF9800")}
