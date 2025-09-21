@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useState } from "react";
 import { auth, db } from "./firebaseConfig";
 
-function Login({ onNavigate, role }) {
+const App = ({ onNavigate, role }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -60,124 +60,139 @@ function Login({ onNavigate, role }) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        height: "100vh",
-        margin: 0,
-        padding: 0,
-        overflow: "hidden",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        background: "linear-gradient(135deg, #e6f3ff 0%, #f0f9ff 50%, #e6f3ff 100%)",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          padding: "40px",
-          background: "linear-gradient(145deg, #ffffff 0%, #f8faff 100%)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "auto",
-          boxShadow: "0 0 20px rgba(0,0,0,0.1)"
-        }}
-      >
-        <h2 style={{ 
-          color: "#1a365d",
-          marginBottom: "30px", 
-          textAlign: "center",
-          fontSize: "2.5rem",
-          fontWeight: "600",
-          textTransform: "uppercase",
-          letterSpacing: "1px",
-          textShadow: "0 2px 4px rgba(0,0,0,0.1)"
-        }}>
+    <div style={{
+      display: 'flex',
+      width: '100%',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      borderRadius: '1.5rem',
+      overflow: 'hidden',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      backgroundColor: '#f9fafb',
+      fontFamily: "'Inter', sans-serif",
+      height: '100vh',
+      alignItems: 'center',
+    }}>
+      {/* Left Section: Illustration and description */}
+      <div style={{
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '2rem',
+        background: 'linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+      }}>
+        <img src="https://res.cloudinary.com/doxqjlztu/image/upload/v1758173256/WhatsApp_Image_2025-09-18_at_10.20.36_5bfc8d07_jopwmm.jpg" alt="Alumni Portal Illustration" style={{ maxWidth: '100%', height: 'auto' }} />
+        <div style={{ marginTop: '2rem' }}>
+          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#1e40af' }}>Alumni Portal</h2>
+          <p style={{ marginTop: '0.5rem', fontSize: '1.125rem', color: '#1d4ed8' }}>Connect with your college alumni network</p>
+        </div>
+      </div>
+
+      {/* Right Section: Login Form */}
+      <div style={{
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '2rem',
+        backgroundColor: '#ffffff',
+        borderRadius: '0 1.5rem 1.5rem 0',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div style={{
+            width: '4rem',
+            height: '4rem',
+            backgroundColor: '#2563eb',
+            borderRadius: '1rem',
+            color: 'white',
+            fontSize: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}>
+            🎓
+          </div>
+        </div>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1f2937', textAlign: 'center', marginBottom: '0.5rem' }}>
           Login as {role || "Select Role"}
-        </h2>
-        <form onSubmit={handleSubmit} style={{ 
-          display: "flex", 
-          flexDirection: "column", 
-          gap: "20px",
-          width: "100%",
-          maxWidth: "400px",
-          margin: "0 auto",
-          padding: "30px",
-          background: "rgba(255, 255, 255, 0.5)",
-          borderRadius: "15px",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-          backdropFilter: "blur(10px)"
-        }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label style={{ marginBottom: "5px", color: "#555", fontSize: "14px" }}>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                padding: "12px",
-                border: error ? "1px solid #e53e3e" : "1px solid #e2e8f0",
-                borderRadius: "8px",
-                fontSize: "16px",
-                backgroundColor: "#f8faff",
-                transition: "all 0.3s ease",
-                outline: "none",
-                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
-              }}
-              placeholder="Enter your email"
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label style={{ marginBottom: "5px", color: "#555", fontSize: "14px" }}>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                padding: "12px",
-                border: error ? "1px solid #e53e3e" : "1px solid #e2e8f0",
-                borderRadius: "8px",
-                fontSize: "16px",
-                backgroundColor: "#f8faff",
-                transition: "all 0.3s ease",
-                outline: "none",
-                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
-              }}
-              placeholder="Enter your password"
-            />
-          </div>
-          {error && <span style={{ color: "#e53e3e", fontSize: "14px", marginTop: "5px" }}>{error}</span>}
-          <button
-            type="submit"
+        </h1>
+        <p style={{ color: '#6b7280', textAlign: 'center', marginBottom: '2rem' }}>Connect with your college alumni network</p>
+        
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <input 
+            type="email" 
+            placeholder="Email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{
+              ...inputStyle,
+              border: error ? '1px solid #e53e3e' : '1px solid #d1d5db'
+            }}
+            required
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              ...inputStyle,
+              border: error ? '1px solid #e53e3e' : '1px solid #d1d5db'
+            }}
+            required
+          />
+          
+          {error && (
+            <div style={{ 
+              color: '#e53e3e', 
+              fontSize: '0.875rem', 
+              padding: '0.5rem', 
+              backgroundColor: '#fef2f2',
+              borderRadius: '0.375rem',
+              border: '1px solid #fecaca'
+            }}>
+              {error}
+            </div>
+          )}
+          
+          <button 
+            type="submit" 
             disabled={isSubmitting || !role}
             style={{
-              padding: "14px",
-              background: isSubmitting || !role 
-                ? "#ccc" 
-                : "linear-gradient(135deg, #4299e1 0%, #3182ce 100%)",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: isSubmitting || !role ? "not-allowed" : "pointer",
-              fontSize: "16px",
-              fontWeight: "600",
-              transition: "all 0.3s ease",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              ...buttonStyle,
+              backgroundColor: isSubmitting || !role ? '#9ca3af' : '#2563eb',
+              cursor: isSubmitting || !role ? 'not-allowed' : 'pointer'
             }}
-            onMouseOver={(e) => !isSubmitting && role && (e.target.style.backgroundColor = "#f57c00")}
-            onMouseOut={(e) => !isSubmitting && role && (e.target.style.backgroundColor = "#FF9800")}
+            onMouseOver={(e) => {
+              if (!isSubmitting && role) {
+                e.target.style.backgroundColor = '#1d4ed8';
+              }
+            }}
+            onMouseOut={(e) => {
+              if (!isSubmitting && role) {
+                e.target.style.backgroundColor = '#2563eb';
+              }
+            }}
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
         </form>
-        <p style={{ marginTop: "20px", color: "#666", textAlign: "center" }}>
+        
+        <p style={{ marginTop: '1.5rem', color: '#6b7280', textAlign: 'center' }}>
           <span
             onClick={() => onNavigate("role-selection-login")}
-            style={{ color: "#666", cursor: "pointer", textDecoration: "underline" }}
+            style={{ 
+              color: '#3b82f6', 
+              cursor: 'pointer', 
+              textDecoration: 'underline',
+              fontSize: '0.875rem'
+            }}
           >
             ← Change Role
           </span>
@@ -185,6 +200,29 @@ function Login({ onNavigate, role }) {
       </div>
     </div>
   );
-}
+};
 
-export default Login;
+const inputStyle = {
+  width: '100%',
+  padding: '0.75rem 1rem',
+  border: '1px solid #d1d5db',
+  borderRadius: '0.5rem',
+  outline: 'none',
+  fontSize: '1rem',
+  transition: 'border-color 0.2s ease-in-out',
+};
+
+const buttonStyle = {
+  width: '100%',
+  backgroundColor: '#2563eb',
+  color: 'white',
+  padding: '0.75rem 0',
+  borderRadius: '0.5rem',
+  fontWeight: 600,
+  border: 'none',
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease-in-out',
+  fontSize: '1rem'
+};
+
+export default App;

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig"; // Adjust the import path if needed
 
-function AddEvent({ onNavigate }) {
-  const [eventName, setEventName] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
-  const [eventDateTime, setEventDateTime] = useState("");
-  const [eventOrganizer, setEventOrganizer] = useState("");
-  const [googleFormLink, setGoogleFormLink] = useState("");
-  const [eventUrl, setEventUrl] = useState("");
+function AddJob({ onNavigate }) {
+  const [jobRole, setJobRole] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [salary, setSalary] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobUrl, setJobUrl] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+  const [requiredSkills, setRequiredSkills] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,33 +21,35 @@ function AddEvent({ onNavigate }) {
     setIsLoading(true);
 
     // Validate mandatory fields
-    if (!eventName || !eventLocation || !eventDateTime || !eventOrganizer || !googleFormLink) {
-      setError("All mandatory fields (Event Name, Location, Date & Time, Organizer, Google Form Link) must be filled.");
+    if (!jobRole || !companyName || !salary || !location || !jobUrl || !jobDescription || !requiredSkills) {
+      setError("All fields (Job Role, Company Name, Salary, Location, Job URL, Job Description, Required Skills) must be filled.");
       setIsLoading(false);
       return;
     }
 
     try {
-      await addDoc(collection(db, "events"), {
-        eventName,
-        eventLocation,
-        eventDateTime,
-        eventOrganizer,
-        googleFormLink,
-        eventUrl: eventUrl || "", // Optional field, defaults to empty string if not provided
+      await addDoc(collection(db, "jobs"), {
+        jobRole,
+        companyName,
+        salary,
+        location,
+        jobUrl,
+        jobDescription,
+        requiredSkills,
         createdAt: new Date().toISOString(),
       });
-      setSuccess("🎉 Event added successfully!");
+      setSuccess("🎉 Job added successfully!");
       // Reset form
-      setEventName("");
-      setEventLocation("");
-      setEventDateTime("");
-      setEventOrganizer("");
-      setGoogleFormLink("");
-      setEventUrl("");
+      setJobRole("");
+      setCompanyName("");
+      setSalary("");
+      setLocation("");
+      setJobUrl("");
+      setJobDescription("");
+      setRequiredSkills("");
     } catch (err) {
-      console.error("Error adding event:", err.message, err.code);
-      setError(`❌ Failed to add event: ${err.message}. Please try again or contact support.`);
+      console.error("Error adding job:", err.message, err.code);
+      setError(`❌ Failed to add job: ${err.message}. Please try again or contact support.`);
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +91,7 @@ function AddEvent({ onNavigate }) {
         position: "relative",
       }}
     >
-          <style>
+      <style>
         {`
           @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -158,7 +161,9 @@ function AddEvent({ onNavigate }) {
             bottom: 20%;
             left: 20%;
             animation-delay: -1s;
-          }          .input-field:focus {
+          }
+          
+          .input-field:focus {
             border-color: #4f46e5 !important;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
             transform: translateY(-1px) !important;
@@ -169,7 +174,7 @@ function AddEvent({ onNavigate }) {
           }
         `}
       </style>
-      
+
       <div
         className="form-container"
         style={{
@@ -190,7 +195,7 @@ function AddEvent({ onNavigate }) {
             letterSpacing: "1px",
           }}
         >
-          Add Event
+          Add Job
         </h2>
         
         {error && (
@@ -213,11 +218,11 @@ function AddEvent({ onNavigate }) {
           <div 
             className="success-message"
             style={{ 
-              color: "#10b981", 
+              color: "#2563eb", 
               marginBottom: "20px", 
               padding: "15px",
-              backgroundColor: "rgba(16, 185, 129, 0.1)",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
+              backgroundColor: "rgba(37, 99, 235, 0.1)",
+              border: "1px solid rgba(37, 99, 235, 0.3)",
               borderRadius: "8px",
               textAlign: "center",
               fontSize: "14px",
@@ -241,86 +246,99 @@ function AddEvent({ onNavigate }) {
           }}
         >
           <label style={labelStyle}>
-            📝 Event Name *
+            💼 Job Role *
             <input
               type="text"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
+              value={jobRole}
+              onChange={(e) => setJobRole(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter event name"
+              placeholder="Enter job role"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📍 Event Location *
+            🏢 Company Name *
             <input
               type="text"
-              value={eventLocation}
-              onChange={(e) => setEventLocation(e.target.value)}
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter venue or location"
+              placeholder="Enter company name"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📅 Event Date & Time *
+            💰 Salary (in ₹) *
             <p style={{ 
               fontSize: "12px", 
               color: "#6b7280", 
               margin: "4px 0", 
               fontStyle: "italic" 
             }}>
-              Please select the date and time for your event
+              Enter amount in Rupees (e.g., ₹50,000 per annum)
             </p>
             <input
-              type="datetime-local"
-              value={eventDateTime}
-              onChange={(e) => setEventDateTime(e.target.value)}
+              type="text"
+              value={salary}
+              onChange={(e) => setSalary(e.target.value)}
               className="input-field"
               style={inputStyle}
+              placeholder="₹60,0000 per annum"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            👤 Event Organizer *
+            📍 Location *
             <input
               type="text"
-              value={eventOrganizer}
-              onChange={(e) => setEventOrganizer(e.target.value)}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter organizer name"
+              placeholder="Enter location"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📋 Google Form Registration Link *
+            🔗 Job URL *
             <input
               type="url"
-              value={googleFormLink}
-              onChange={(e) => setGoogleFormLink(e.target.value)}
+              value={jobUrl}
+              onChange={(e) => setJobUrl(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="https://forms.google.com/..."
+              placeholder="https://example.com/job-details"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            🔗 Event URL (Optional)
-            <input
-              type="url"
-              value={eventUrl}
-              onChange={(e) => setEventUrl(e.target.value)}
+            📝 Job Description *
+            <textarea
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
               className="input-field"
-              style={inputStyle}
-              placeholder="https://example.com/event-details"
+              style={{ ...inputStyle, minHeight: "100px" }}
+              placeholder="Enter job description"
+              required
+            />
+          </label>
+
+          <label style={labelStyle}>
+            🎯 Required Skills *
+            <textarea
+              value={requiredSkills}
+              onChange={(e) => setRequiredSkills(e.target.value)}
+              className="input-field"
+              style={{ ...inputStyle, minHeight: "100px" }}
+              placeholder="Enter required skills (e.g., Java, Python)"
+              required
             />
           </label>
 
@@ -358,7 +376,7 @@ function AddEvent({ onNavigate }) {
               }
             }}
           >
-            {isLoading ? "🔄 Adding Event..." : "🎉 Add Event"}
+            {isLoading ? "🔄 Adding Job..." : "🎉 Add Job"}
           </button>
         </form>
 
@@ -393,8 +411,14 @@ function AddEvent({ onNavigate }) {
           ← Back to Dashboard
         </button>
       </div>
+
+      <div className="floating-shapes">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
     </div>
   );
 }
 
-export default AddEvent;
+export default AddJob;

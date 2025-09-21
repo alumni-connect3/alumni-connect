@@ -152,26 +152,10 @@ function Signup({ onNavigate }) {
         createdAt: serverTimestamp(),
       });
 
-      alert("Registration successful!");
+      alert("Registration successful! Redirecting to dashboard...");
       
-      // Reset form
-      setForm({
-        fullName: "",
-        regdNo: "",
-        department: "",
-        phone: "",
-        dob: "",
-        gradYear: "",
-        degree: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agree: false,
-      });
-      setErrors({});
-      setOtp("");
-      setShowOtpField(false);
-      setBackendOtp("");
+      // Navigate to StudentDashboard
+      onNavigate("student-dashboard");
       
     } catch (error) {
       console.error("Firebase Error:", error);

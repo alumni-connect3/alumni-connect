@@ -193,7 +193,7 @@ function AdminDashboard({ onNavigate }) {
             Add Event
           </button>
           <button
-            onClick={() => onNavigate("announcement")}
+            onClick={() => onNavigate("add-job")}
             style={{
               padding: "10px",
               backgroundColor: "#2563EB",
@@ -208,7 +208,43 @@ function AdminDashboard({ onNavigate }) {
             onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
           >
-            Announcement
+            Add Job
+          </button>
+          <button
+            onClick={() => onNavigate("add-internship")}
+            style={{
+              padding: "10px",
+              backgroundColor: "#2563EB",
+              color: "#F9FAFB",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              textAlign: "left",
+              transition: "background-color 0.3s",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+          >
+            Add Internship
+          </button>
+          <button
+            onClick={() => onNavigate("add-placeholder")}
+            style={{
+              padding: "10px",
+              backgroundColor: "#2563EB",
+              color: "#F9FAFB",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              textAlign: "left",
+              transition: "background-color 0.3s",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+          >
+            View All Events
           </button>
         </div>
 

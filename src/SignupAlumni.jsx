@@ -199,10 +199,7 @@ function SignupAlumni({ onNavigate }) {
       } else {
         alert(`Signup failed: ${error.message}. Please try again or contact support.`);
       }
-      // Optionally delete the Auth user if Firestore write failed
-      if (error.code !== "auth/email-already-in-use" && userCredential?.user) {
-        await deleteUser(userCredential.user);
-      }
+      
     } finally {
       setIsSubmitting(false);
     }

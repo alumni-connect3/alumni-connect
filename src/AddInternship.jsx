@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig"; // Adjust the import path if needed
 
-function AddEvent({ onNavigate }) {
-  const [eventName, setEventName] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
-  const [eventDateTime, setEventDateTime] = useState("");
-  const [eventOrganizer, setEventOrganizer] = useState("");
-  const [googleFormLink, setGoogleFormLink] = useState("");
-  const [eventUrl, setEventUrl] = useState("");
+function AddInternship({ onNavigate }) {
+  const [internshipDescription, setInternshipDescription] = useState("");
+  const [internshipRole, setInternshipRole] = useState("");
+  const [internshipUrl, setInternshipUrl] = useState("");
+  const [onlineOffline, setOnlineOffline] = useState("online"); // Default to "online"
+  const [requiredSkills, setRequiredSkills] = useState("");
+  const [duration, setDuration] = useState(""); // New field: Duration
+  const [stipend, setStipend] = useState(""); // Stipend field
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,33 +21,35 @@ function AddEvent({ onNavigate }) {
     setIsLoading(true);
 
     // Validate mandatory fields
-    if (!eventName || !eventLocation || !eventDateTime || !eventOrganizer || !googleFormLink) {
-      setError("All mandatory fields (Event Name, Location, Date & Time, Organizer, Google Form Link) must be filled.");
+    if (!internshipDescription || !internshipRole || !internshipUrl || !requiredSkills || !duration || !stipend) {
+      setError("All fields (Internship Description, Internship Role, Internship URL, Required Skills, Duration, Stipend) must be filled.");
       setIsLoading(false);
       return;
     }
 
     try {
-      await addDoc(collection(db, "events"), {
-        eventName,
-        eventLocation,
-        eventDateTime,
-        eventOrganizer,
-        googleFormLink,
-        eventUrl: eventUrl || "", // Optional field, defaults to empty string if not provided
+      await addDoc(collection(db, "internships"), {
+        internshipDescription,
+        internshipRole,
+        internshipUrl,
+        onlineOffline,
+        requiredSkills,
+        stifund: stipend,
+        duration,
         createdAt: new Date().toISOString(),
       });
-      setSuccess("🎉 Event added successfully!");
+      setSuccess("🎉 Internship added successfully!");
       // Reset form
-      setEventName("");
-      setEventLocation("");
-      setEventDateTime("");
-      setEventOrganizer("");
-      setGoogleFormLink("");
-      setEventUrl("");
+      setInternshipDescription("");
+      setInternshipRole("");
+      setInternshipUrl("");
+      setOnlineOffline("online");
+      setRequiredSkills("");
+      setDuration("");
+      setStipend("");
     } catch (err) {
-      console.error("Error adding event:", err.message, err.code);
-      setError(`❌ Failed to add event: ${err.message}. Please try again or contact support.`);
+      console.error("Error adding internship:", err.message, err.code);
+      setError(`❌ Failed to add internship: ${err.message}. Please try again or contact support.`);
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +91,7 @@ function AddEvent({ onNavigate }) {
         position: "relative",
       }}
     >
-          <style>
+      <style>
         {`
           @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -158,7 +161,9 @@ function AddEvent({ onNavigate }) {
             bottom: 20%;
             left: 20%;
             animation-delay: -1s;
-          }          .input-field:focus {
+          }
+          
+          .input-field:focus {
             border-color: #4f46e5 !important;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
             transform: translateY(-1px) !important;
@@ -169,7 +174,7 @@ function AddEvent({ onNavigate }) {
           }
         `}
       </style>
-      
+
       <div
         className="form-container"
         style={{
@@ -190,7 +195,7 @@ function AddEvent({ onNavigate }) {
             letterSpacing: "1px",
           }}
         >
-          Add Event
+          Add Internship
         </h2>
         
         {error && (
@@ -241,86 +246,100 @@ function AddEvent({ onNavigate }) {
           }}
         >
           <label style={labelStyle}>
-            📝 Event Name *
-            <input
-              type="text"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
+            📝 Internship Description *
+            <textarea
+              value={internshipDescription}
+              onChange={(e) => setInternshipDescription(e.target.value)}
               className="input-field"
-              style={inputStyle}
-              placeholder="Enter event name"
+              style={{ ...inputStyle, minHeight: "100px" }}
+              placeholder="Enter internship description"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📍 Event Location *
+            💼 Internship Role *
             <input
               type="text"
-              value={eventLocation}
-              onChange={(e) => setEventLocation(e.target.value)}
+              value={internshipRole}
+              onChange={(e) => setInternshipRole(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter venue or location"
+              placeholder="Enter internship role"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📅 Event Date & Time *
+            🔗 Internship URL *
+            <input
+              type="url"
+              value={internshipUrl}
+              onChange={(e) => setInternshipUrl(e.target.value)}
+              className="input-field"
+              style={inputStyle}
+              placeholder="https://example.com/internship-details"
+              required
+            />
+          </label>
+
+          <label style={labelStyle}>
+            🌐 Online/Offline *
+            <select
+              value={onlineOffline}
+              onChange={(e) => setOnlineOffline(e.target.value)}
+              className="input-field"
+              style={inputStyle}
+              required
+            >
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+            </select>
+          </label>
+
+          <label style={labelStyle}>
+            💰 Stipend (in ₹) *
             <p style={{ 
               fontSize: "12px", 
               color: "#6b7280", 
               margin: "4px 0", 
               fontStyle: "italic" 
             }}>
-              Please select the date and time for your event
+              Enter amount in Rupees (e.g., ₹10,000 per month)
             </p>
             <input
-              type="datetime-local"
-              value={eventDateTime}
-              onChange={(e) => setEventDateTime(e.target.value)}
+              type="text"
+              value={stipend}
+              onChange={(e) => setStipend(e.target.value)}
               className="input-field"
               style={inputStyle}
+              placeholder="₹10,000 per month"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            👤 Event Organizer *
+            ⏳ Duration *
             <input
               type="text"
-              value={eventOrganizer}
-              onChange={(e) => setEventOrganizer(e.target.value)}
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter organizer name"
+              placeholder="Enter duration (e.g., 3 months)"
               required
             />
           </label>
 
           <label style={labelStyle}>
-            📋 Google Form Registration Link *
-            <input
-              type="url"
-              value={googleFormLink}
-              onChange={(e) => setGoogleFormLink(e.target.value)}
+            🎯 Required Skills *
+            <textarea
+              value={requiredSkills}
+              onChange={(e) => setRequiredSkills(e.target.value)}
               className="input-field"
-              style={inputStyle}
-              placeholder="https://forms.google.com/..."
+              style={{ ...inputStyle, minHeight: "100px" }}
+              placeholder="Enter required skills (e.g., HTML, CSS)"
               required
-            />
-          </label>
-
-          <label style={labelStyle}>
-            🔗 Event URL (Optional)
-            <input
-              type="url"
-              value={eventUrl}
-              onChange={(e) => setEventUrl(e.target.value)}
-              className="input-field"
-              style={inputStyle}
-              placeholder="https://example.com/event-details"
             />
           </label>
 
@@ -358,7 +377,7 @@ function AddEvent({ onNavigate }) {
               }
             }}
           >
-            {isLoading ? "🔄 Adding Event..." : "🎉 Add Event"}
+            {isLoading ? "🔄 Adding Internship..." : "🎉 Add Internship"}
           </button>
         </form>
 
@@ -393,8 +412,14 @@ function AddEvent({ onNavigate }) {
           ← Back to Dashboard
         </button>
       </div>
+
+      <div className="floating-shapes">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
     </div>
   );
 }
 
-export default AddEvent;
+export default AddInternship;

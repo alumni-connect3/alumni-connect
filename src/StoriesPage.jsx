@@ -1,10 +1,10 @@
 import React from "react";
 
-function Announcement({ onNavigate }) {
+function StoriesPage({ onNavigate }) {
   return (
     <div style={{ padding: "20px", textAlign: "center", minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
-      <h1 style={{ color: "#2c3e50", marginBottom: "20px" }}>Announcements</h1>
-      <p style={{ color: "#7f8c8d", marginBottom: "20px" }}>Welcome to the announcements page! Check back for the latest updates.</p>
+      <h1 style={{ color: "#2c3e50", marginBottom: "20px" }}>Stories Page</h1>
+      <p style={{ color: "#7f8c8d", marginBottom: "20px" }}>Share and read alumni success stories here.</p>
       <button
         onClick={() => onNavigate("alumni-dashboard")}
         style={{
@@ -20,10 +20,10 @@ function Announcement({ onNavigate }) {
         onMouseOver={(e) => (e.target.style.backgroundColor = "#1976D2")}
         onMouseOut={(e) => (e.target.style.backgroundColor = "#2196F3")}
       >
-        Back to Alumni Dashboard
+        Back to Dashboard
       </button>
     </div>
   );
 }
 
-export default Announcement;
+export default StoriesPage;

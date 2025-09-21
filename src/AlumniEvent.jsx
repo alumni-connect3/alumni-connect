@@ -1,10 +1,10 @@
 import React from "react";
 
-function Announcement({ onNavigate }) {
+function AlumniEvent({ onNavigate }) {
   return (
     <div style={{ padding: "20px", textAlign: "center", minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
-      <h1 style={{ color: "#2c3e50", marginBottom: "20px" }}>Announcements</h1>
-      <p style={{ color: "#7f8c8d", marginBottom: "20px" }}>Welcome to the announcements page! Check back for the latest updates.</p>
+      <h1 style={{ color: "#2c3e50", marginBottom: "20px" }}>Alumni Event</h1>
+      <p style={{ color: "#7f8c8d", marginBottom: "20px" }}>Welcome to the Alumni Event page!</p>
       <button
         onClick={() => onNavigate("alumni-dashboard")}
         style={{
@@ -26,4 +26,4 @@ function Announcement({ onNavigate }) {
   );
 }
 
-export default Announcement;
+export default AlumniEvent;
