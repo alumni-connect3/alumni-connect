@@ -16,14 +16,19 @@ import AddInternship from "./AddInternship";
 import AddPlaceholder from "./AddPlaceholder";
 import StoriesPage from "./StoriesPage";
 import LiveChatPage from "./LiveChatPage";
-import ViewProfilePage from "./ViewProfilePage";
-import AlumniJob from "./AlumniJob"; // Updated to AlumniJob
+import ViewProfilePage from "./ViewProfilePage"; // For alumni profile
+import ApplyJob from "./ApplyJob";
+import ApplyInternship from "./ApplyInternship";
+import RegisterEvent from "./RegisterEvent";
+import StudentProfilePage from "./StudentProfilePage"; // For student profile
+import ViewStoriesPage from "./ViewStoriesPage";
+import AlumniJob from "./AlumniJob";
 import AlumniInternship from "./AlumniInternship";
 import AlumniEvent from "./AlumniEvent";
-import Announcement from "./Announcement"; // Added missing import
+import Announcement from "./Announcement";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("home"); // Default to home page
   const [role, setRole] = useState(null); // Track selected role for login
 
   const navigate = (page, params = {}) => {
@@ -62,7 +67,7 @@ function App() {
       case "add-event":
         return <AddEvent onNavigate={navigate} />;
       case "announcement":
-        return <Announcement onNavigate={navigate} />; // Now functional with import
+        return <Announcement onNavigate={navigate} />;
       case "add-job":
         return <AddJob onNavigate={navigate} />;
       case "add-internship":
@@ -73,16 +78,26 @@ function App() {
         return <StoriesPage onNavigate={navigate} />;
       case "live-chat":
         return <LiveChatPage onNavigate={navigate} />;
+      case "profile":
+        return <StudentProfilePage onNavigate={navigate} />; // Student profile
+      case "view-stories":
+        return <ViewStoriesPage onNavigate={navigate} />;
+      case "apply-job":
+        return <ApplyJob onNavigate={navigate} />;
+      case "apply-internship":
+        return <ApplyInternship onNavigate={navigate} />;
+      case "register-event":
+        return <RegisterEvent onNavigate={navigate} />;
+      case "alumni-job":
+        return <AlumniJob onNavigate={navigate} />;
+      case "alumni-internship":
+        return <AlumniInternship onNavigate={navigate} />;
+      case "alumni-event":
+        return <AlumniEvent onNavigate={navigate} />;
       case "view-profile":
-        return <ViewProfilePage onNavigate={navigate} />;
- case "alumni-job":
-  return <AlumniJob onNavigate={navigate} />;
-case "alumni-internship":
-  return <AlumniInternship onNavigate={navigate} />;
-case "alumni-event":
-  return <AlumniEvent onNavigate={navigate} />;
+        return <ViewProfilePage onNavigate={navigate} />; // Alumni profile
       default:
-        return <Home onNavigate={navigate} />;
+        return <Home onNavigate={navigate} />; // Fallback to home if route is invalid
     }
   };
 
