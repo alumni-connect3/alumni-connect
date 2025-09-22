@@ -6,7 +6,7 @@ function AlumniDashboard({ onNavigate }) {
   const [loading, setLoading] = useState(false);
 
   // Mock data - in a real app, this would come from an API based on the logged-in user's email
-  const mockProfileData = {
+  const mockProfileData = React.useMemo(() => ({
     name: "John Doe",
     email: "john.doe@example.com",
     graduationYear: 2018,
@@ -16,7 +16,7 @@ function AlumniDashboard({ onNavigate }) {
     skills: ["JavaScript", "React", "Node.js", "Python"],
     location: "San Francisco, CA",
     linkedIn: "linkedin.com/in/johndoe",
-  };
+  }), []);
 
   // Simulate fetching profile data based on email
   useEffect(() => {
@@ -28,7 +28,7 @@ function AlumniDashboard({ onNavigate }) {
         setLoading(false);
       }, 800);
     }
-  }, [showProfile, profileData]);
+  }, [showProfile, profileData, mockProfileData]);
 
   const handleViewProfile = () => {
     setShowProfile(!showProfile);
