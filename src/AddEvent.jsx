@@ -54,24 +54,29 @@ function AddEvent({ onNavigate }) {
 
   const inputStyle = {
     width: "100%",
-    padding: "12px",
-    marginTop: "8px",
+    padding: "16px 20px",
+    marginTop: "10px",
     border: "2px solid #e2e8f0",
-    borderRadius: "8px",
+    borderRadius: "12px",
     boxSizing: "border-box",
     fontSize: "16px",
-    transition: "all 0.3s ease",
+    transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
     outline: "none",
     backgroundColor: "#ffffff",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
+    position: "relative",
+    fontWeight: "500",
   };
 
   const labelStyle = {
-    marginBottom: "15px",
+    marginBottom: "20px",
     textAlign: "left",
-    color: "#374151",
-    fontSize: "14px",
-    fontWeight: "600",
+    color: "#1e293b",
+    fontSize: "15px",
+    fontWeight: "700",
     display: "block",
+    textTransform: "uppercase",
+    letterSpacing: "0.5px",
   };
 
   return (
@@ -80,15 +85,71 @@ function AddEvent({ onNavigate }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        minHeight: "100vh",
-        padding: "20px",
+        width: "100vw",
+        height: "100vh",
+        margin: 0,
+        padding: 0,
         background: "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
         backgroundSize: "400% 400%",
         animation: "gradientShift 15s ease infinite",
-        position: "relative",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: "auto"
       }}
     >
-          <style>
+      {/* Enhanced Floating Shapes */}
+      <div className="floating-shapes">
+        <div className="shape" style={{
+          width: "120px",
+          height: "120px",
+          top: "15%",
+          left: "8%",
+          background: "rgba(255, 255, 255, 0.12)",
+          animationDelay: "-2s",
+          animationDuration: "8s"
+        }}></div>
+        <div className="shape" style={{
+          width: "80px",
+          height: "80px",
+          top: "65%",
+          right: "12%",
+          background: "rgba(255, 255, 255, 0.15)",
+          animationDelay: "-4s",
+          animationDuration: "6s"
+        }}></div>
+        <div className="shape" style={{
+          width: "60px",
+          height: "60px",
+          bottom: "25%",
+          left: "15%",
+          background: "rgba(255, 255, 255, 0.1)",
+          animationDelay: "-1s",
+          animationDuration: "7s"
+        }}></div>
+        <div className="shape" style={{
+          width: "40px",
+          height: "40px",
+          top: "30%",
+          right: "25%",
+          background: "rgba(255, 255, 255, 0.08)",
+          animationDelay: "-3s",
+          animationDuration: "5s"
+        }}></div>
+        <div className="shape" style={{
+          width: "90px",
+          height: "90px",
+          bottom: "10%",
+          right: "30%",
+          background: "rgba(255, 255, 255, 0.11)",
+          animationDelay: "-5s",
+          animationDuration: "9s"
+        }}></div>
+      </div>
+
+      <style>
         {`
           @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -97,28 +158,39 @@ function AddEvent({ onNavigate }) {
           }
           
           @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(120deg); }
+            66% { transform: translateY(-8px) rotate(240deg); }
           }
           
           @keyframes slideInFromTop {
             from {
               opacity: 0;
-              transform: translateY(-50px);
+              transform: translateY(-50px) scale(0.9);
             }
             to {
               opacity: 1;
-              transform: translateY(0);
+              transform: translateY(0) scale(1);
             }
           }
           
           @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+          }
+          
+          @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+          }
+          
+          @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
           }
           
           .form-container {
-            animation: slideInFromTop 0.8s ease-out;
+            animation: slideInFromTop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           }
           
           .floating-shapes {
@@ -131,41 +203,132 @@ function AddEvent({ onNavigate }) {
           
           .shape {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
+            backdrop-filter: blur(2px);
           }
           
-          .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: -2s;
+          .input-field {
+            position: relative;
           }
           
-          .shape:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 60%;
-            right: 15%;
-            animation-delay: -4s;
+          .input-field:hover {
+            border-color: #8b5cf6 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2) !important;
           }
           
-          .shape:nth-child(3) {
-            width: 40px;
-            height: 40px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: -1s;
-          }          .input-field:focus {
+          .input-field:focus {
             border-color: #4f46e5 !important;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
-            transform: translateY(-1px) !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15), 0 8px 25px rgba(79, 70, 229, 0.2) !important;
+            transform: translateY(-3px) !important;
+            background: #fefefe !important;
           }
           
           .success-message {
-            animation: pulse 2s ease-in-out;
+            animation: bounce 0.6s ease-out;
+          }
+          
+          .error-message {
+            animation: bounce 0.6s ease-out;
+          }
+          
+          .submit-button {
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              transparent,
+              rgba(255, 255, 255, 0.3),
+              transparent
+            );
+            transition: left 0.6s;
+          }
+          
+          .submit-button:hover::before {
+            left: 100%;
+          }
+          
+          .submit-button:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.6) !important;
+          }
+          
+          .submit-button:active {
+            transform: translateY(-1px) scale(0.98) !important;
+          }
+          
+          .back-button {
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              transparent,
+              rgba(255, 255, 255, 0.2),
+              transparent
+            );
+            transition: left 0.5s;
+          }
+          
+          .back-button:hover::before {
+            left: 100%;
+          }
+          
+          .back-button:hover {
+            background: rgba(255, 255, 255, 0.25) !important;
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+          }
+          
+          .form-card {
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          }
+          
+          .form-card:hover {
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+          }
+          
+          .label-enhanced {
+            transition: all 0.3s ease;
+          }
+          
+          .label-enhanced:hover {
+            color: #4f46e5;
+            transform: translateX(5px);
+          }
+          
+          .loading-spinner {
+            animation: spin 1s linear infinite;
+          }
+          
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
         `}
       </style>
@@ -176,36 +339,47 @@ function AddEvent({ onNavigate }) {
           position: "relative",
           zIndex: 1,
           width: "100%",
-          maxWidth: "600px",
+          maxWidth: "650px",
+          margin: "40px auto",
+          padding: "0 20px",
+          boxSizing: "border-box",
+          flex: 1
         }}
       >
         <h2 
           style={{ 
             color: "#ffffff", 
-            marginBottom: "30px", 
-            fontSize: "2.5rem", 
-            fontWeight: "700",
+            marginBottom: "35px", 
+            fontSize: "3rem", 
+            fontWeight: "800",
             textAlign: "center",
-            textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
-            letterSpacing: "1px",
+            textShadow: "3px 3px 6px rgba(0,0,0,0.4)",
+            letterSpacing: "2px",
+            background: "linear-gradient(45deg, #ffffff, #f8fafc)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            animation: "pulse 3s ease-in-out infinite",
           }}
         >
-          Add Event
+          ✨ Add Event
         </h2>
         
         {error && (
-          <div style={{ 
-            color: "#ef4444", 
-            marginBottom: "20px", 
-            padding: "15px",
-            backgroundColor: "rgba(239, 68, 68, 0.1)",
-            border: "1px solid rgba(239, 68, 68, 0.3)",
-            borderRadius: "8px",
+          <div className="error-message" style={{ 
+            color: "#ffffff", 
+            marginBottom: "25px", 
+            padding: "18px 24px",
+            backgroundColor: "rgba(239, 68, 68, 0.2)",
+            border: "2px solid rgba(239, 68, 68, 0.4)",
+            borderRadius: "15px",
             textAlign: "center",
-            fontSize: "14px",
-            fontWeight: "500",
+            fontSize: "15px",
+            fontWeight: "600",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 8px 25px rgba(239, 68, 68, 0.3)",
           }}>
-            {error}
+            ⚠️ {error}
           </div>
         )}
         
@@ -213,34 +387,34 @@ function AddEvent({ onNavigate }) {
           <div 
             className="success-message"
             style={{ 
-              color: "#10b981", 
-              marginBottom: "20px", 
-              padding: "15px",
-              backgroundColor: "rgba(16, 185, 129, 0.1)",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
-              borderRadius: "8px",
+              color: "#ffffff", 
+              marginBottom: "25px", 
+              padding: "18px 24px",
+              backgroundColor: "rgba(16, 185, 129, 0.2)",
+              border: "2px solid rgba(16, 185, 129, 0.4)",
+              borderRadius: "15px",
               textAlign: "center",
-              fontSize: "14px",
-              fontWeight: "500",
+              fontSize: "15px",
+              fontWeight: "600",
+              backdropFilter: "blur(10px)",
+              boxShadow: "0 8px 25px rgba(16, 185, 129, 0.3)",
             }}
           >
-            {success}
+            🎊 {success}
           </div>
         )}
         
-        <form
-          onSubmit={handleSubmit}
+        <div
+          className="form-card"
           style={{
             display: "flex",
             flexDirection: "column",
-            backgroundColor: "#ffffff",
-            padding: "40px",
-            borderRadius: "20px",
-            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-            border: "1px solid #e5e7eb",
+            padding: "45px",
+            borderRadius: "25px",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
           }}
         >
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             📝 Event Name *
             <input
               type="text"
@@ -248,12 +422,12 @@ function AddEvent({ onNavigate }) {
               onChange={(e) => setEventName(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter event name"
+              placeholder="Enter an amazing event name"
               required
             />
           </label>
 
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             📍 Event Location *
             <input
               type="text"
@@ -261,20 +435,21 @@ function AddEvent({ onNavigate }) {
               onChange={(e) => setEventLocation(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter venue or location"
+              placeholder="Where will the magic happen?"
               required
             />
           </label>
 
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             📅 Event Date & Time *
             <p style={{ 
-              fontSize: "12px", 
-              color: "#6b7280", 
-              margin: "4px 0", 
-              fontStyle: "italic" 
+              fontSize: "13px", 
+              color: "#64748b", 
+              margin: "6px 0", 
+              fontStyle: "italic",
+              fontWeight: "500",
             }}>
-              Please select the date and time for your event
+              Choose the perfect moment for your event ✨
             </p>
             <input
               type="datetime-local"
@@ -286,7 +461,7 @@ function AddEvent({ onNavigate }) {
             />
           </label>
 
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             👤 Event Organizer *
             <input
               type="text"
@@ -294,12 +469,12 @@ function AddEvent({ onNavigate }) {
               onChange={(e) => setEventOrganizer(e.target.value)}
               className="input-field"
               style={inputStyle}
-              placeholder="Enter organizer name"
+              placeholder="Who's behind this awesome event?"
               required
             />
           </label>
 
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             📋 Google Form Registration Link *
             <input
               type="url"
@@ -312,7 +487,7 @@ function AddEvent({ onNavigate }) {
             />
           </label>
 
-          <label style={labelStyle}>
+          <label className="label-enhanced" style={labelStyle}>
             🔗 Event URL (Optional)
             <input
               type="url"
@@ -325,69 +500,67 @@ function AddEvent({ onNavigate }) {
           </label>
 
           <button
-            type="submit"
+            type="button"
             disabled={isLoading}
+            className="submit-button"
+            onClick={handleSubmit}
             style={{
-              padding: "16px 32px",
-              backgroundColor: isLoading ? "#9ca3af" : "#4f46e5",
+              padding: "18px 36px",
+              background: isLoading 
+                ? "linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)" 
+                : "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
               color: "white",
               border: "none",
-              borderRadius: "12px",
+              borderRadius: "15px",
               cursor: isLoading ? "not-allowed" : "pointer",
-              marginTop: "30px",
-              fontWeight: "600",
-              fontSize: "16px",
-              letterSpacing: "0.5px",
-              transition: "all 0.3s ease",
-              boxShadow: "0 4px 15px rgba(79, 70, 229, 0.4)",
+              marginTop: "35px",
+              fontWeight: "700",
+              fontSize: "17px",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              boxShadow: isLoading 
+                ? "0 6px 20px rgba(156, 163, 175, 0.4)" 
+                : "0 8px 25px rgba(79, 70, 229, 0.5)",
               position: "relative",
               overflow: "hidden",
             }}
-            onMouseOver={(e) => {
-              if (!isLoading) {
-                e.target.style.backgroundColor = "#4338ca";
-                e.target.style.transform = "translateY(-2px)";
-                e.target.style.boxShadow = "0 6px 20px rgba(79, 70, 229, 0.5)";
-              }
-            }}
-            onMouseOut={(e) => {
-              if (!isLoading) {
-                e.target.style.backgroundColor = "#4f46e5";
-                e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow = "0 4px 15px rgba(79, 70, 229, 0.4)";
-              }
-            }}
           >
-            {isLoading ? "🔄 Adding Event..." : "🎉 Add Event"}
+            {isLoading ? (
+              <>
+                <span className="loading-spinner" style={{ 
+                  display: "inline-block", 
+                  marginRight: "8px" 
+                }}>
+                  🔄
+                </span>
+                Adding Event...
+              </>
+            ) : (
+              "🎉 Create Event"
+            )}
           </button>
-        </form>
+        </div>
 
         <button
           onClick={() => onNavigate("admin-dashboard")}
+          className="back-button"
           style={{
-            padding: "14px 28px",
+            padding: "16px 32px",
             backgroundColor: "rgba(255, 255, 255, 0.2)",
             color: "white",
             border: "2px solid rgba(255, 255, 255, 0.3)",
-            borderRadius: "12px",
+            borderRadius: "15px",
             cursor: "pointer",
-            marginTop: "25px",
-            fontWeight: "500",
-            fontSize: "14px",
+            marginTop: "30px",
+            fontWeight: "600",
+            fontSize: "15px",
             letterSpacing: "0.5px",
-            transition: "all 0.3s ease",
-            backdropFilter: "blur(10px)",
-            textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
-            e.target.style.transform = "translateY(-2px)";
-            e.target.style.boxShadow = "0 4px 15px rgba(255, 255, 255, 0.2)";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-            e.target.style.transform = "translateY(0)";
-            e.target.style.boxShadow = "none";
+            transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+            backdropFilter: "blur(15px)",
+            textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+            textTransform: "uppercase",
+            boxShadow: "0 6px 20px rgba(255, 255, 255, 0.1)",
           }}
         >
           ← Back to Dashboard
