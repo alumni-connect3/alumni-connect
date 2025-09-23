@@ -41,7 +41,7 @@ function Signup({ onNavigate }) {
     setIsSendingOtp(true);
     
     try {
-      const response = await fetch("http://localhost:5000/send-otp", {
+      const response = await fetch("https://backend1-cvbu.onrender.com/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -280,7 +280,7 @@ function Signup({ onNavigate }) {
 
           {/* Phone Number */}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <label style={{ marginBottom: "5px", color: "##555", fontSize: "14px" }}>Phone Number</label>
+            <label style={{ marginBottom: "5px", color: "#555", fontSize: "14px" }}>Phone Number</label>
             <input
               name="phone"
               value={form.phone}
@@ -487,7 +487,7 @@ function Signup({ onNavigate }) {
               onChange={handleChange}
               style={{ marginRight: "10px" }}
             />
-            <span style={{ color: "#555", fontSize: "14px" }}>Agree to Terms & Privacy Policy</span>
+            <span style={{ color: "#555", fontSize: "14px" }}> Agree to Terms & Privacy Policy</span>
           </div>
           {errors.agree && <span style={{ gridColumn: "1 / -1", color: "#e53e3e", fontSize: "14px", marginTop: "-15px" }}>{errors.agree}</span>}
 
