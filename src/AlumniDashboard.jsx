@@ -89,7 +89,7 @@ function AlumniDashboard({ onNavigate }) {
       minHeight: "100vh",
       width: "100vw",
       height: "100vh",
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
+      background: "#E8ECEC",
       position: "fixed",
       top: 0,
       left: 0,
@@ -222,7 +222,7 @@ function AlumniDashboard({ onNavigate }) {
           }
           
           .title-text {
-            background: linear-gradient(45deg, #ffffff, #f8f9ff);
+            background: black;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -252,7 +252,7 @@ function AlumniDashboard({ onNavigate }) {
         </h1>
         
         <p style={{ 
-          color: "rgba(255,255,255,0.9)", 
+          color: "black", 
           marginBottom: "50px", 
           fontSize: "1.2rem",
           fontWeight: "300",
@@ -309,6 +309,14 @@ function AlumniDashboard({ onNavigate }) {
             style={buttonStyle}
           >
             💬 Live Chat
+          </button>
+          
+          <button
+            className="nav-button"
+            onClick={() => onNavigate("mentorship")}
+            style={buttonStyle}
+          >
+            🧑‍🏫 Mentorship
           </button>
           
           <button

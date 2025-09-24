@@ -383,7 +383,7 @@ function Home({ onNavigate }) {
               textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
-            Stay Connected with Your Alma Mater
+            Stay Connected with Your Alumni
           </h1>
           <p
             style={{
@@ -710,25 +710,25 @@ function Home({ onNavigate }) {
           >
             {[
               {
-                title: "Janmashtami Celebrations",
+                title: "Spark Tank",
                 date: "Aug 14, 2025 - 05:00 PM - 07:00 PM",
                 status: "Past Event",
                 statusColor: "#9c27b0",
-                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758270244/background1_emses5.jpg"
+                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758276132/Screenshot_2025-09-19_152715_qsx707.png"
               },
               {
-                title: "International Yoga Day Celebration",
+                title: "Amaravathi Quantum Valley",
                 date: "Jun 21, 2025",
                 status: "Past Event",
                 statusColor: "#9c27b0",
-                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758270265/background4_f7vawg.jpg"
+                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758276132/Screenshot_2025-09-19_152652_zdu7i9.png"
               },
               {
-                title: "Vishnu Institute 1st Alumni Meet 2025",
-                date: "Mar 08, 2025 - 12:45 PM",
+                title: "Vishnu Institute 1st year students Meet 2025",
+                date: "Sep 13, 2025 - 12:45 PM",
                 status: "Past Event",
                 statusColor: "#9c27b0",
-                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758270266/background6_fuvun2.jpg"
+                imageUrl: "https://res.cloudinary.com/doxqjlztu/image/upload/v1758276132/Screenshot_2025-09-19_152622_fi4vnw.png"
               },
             ].map((event, index) => (
               <div

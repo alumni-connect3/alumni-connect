@@ -42,7 +42,7 @@ function StudentDashboard({ onNavigate }) {
       minHeight: "100vh",
       width: "100vw",
       height: "100vh",
-      background: "linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #a29bfe 100%)",
+      background: "#E8ECEC",
       position: "fixed",
       top: 0,
       left: 0,
@@ -175,7 +175,7 @@ function StudentDashboard({ onNavigate }) {
               transparent
             );
             transition: left 0.5s;
-            border-radius: 25px;
+            borderRadius: 25px;
           }
           
           .logout-button:hover::before {
@@ -183,7 +183,7 @@ function StudentDashboard({ onNavigate }) {
           }
           
           .title-text {
-            background: linear-gradient(45deg, #ffffff, #e8f4fd);
+            background: black;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -191,7 +191,7 @@ function StudentDashboard({ onNavigate }) {
           }
           
           .subtitle-text {
-            color: rgba(255,255,255,0.95);
+            color: black;
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
           }
         `}
@@ -284,6 +284,14 @@ function StudentDashboard({ onNavigate }) {
             style={buttonStyle}
           >
             📚 View Stories
+          </button>
+          
+          <button
+            className="nav-button"
+            onClick={() => onNavigate("mentorship")}
+            style={buttonStyle}
+          >
+            🧑‍🏫 Mentorship
           </button>
           
           <button
